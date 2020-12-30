@@ -3,22 +3,14 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-        /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
-        html{line-height:1.15;-webkit-text-size-adjust:100%}>        
-        </style>
+        <title>Weddit | Home</title>
 
         <link rel="stylesheet" href="css/mystyles.css">
 
         <style>
             body {
                 font-family: 'Nunito';
+                background-color: #141414;
             }
 
             .navbar{
@@ -35,7 +27,7 @@
 
             <div class="navbar-brand">
                 <a class="navbar-item" href="https://bulma.io">
-                <img src="images/navlogo.png" width="150" height="500">
+                <img src="images/navlogo.png" width="150" height="300">
                 </a>
 
                 <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -51,7 +43,35 @@
                     @if (Route::has('login'))
                         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                             @auth
-                                <a href="{{ url('/dashboard') }}" class="buttons is-primary">Home</a>
+                            <div class="navbar-item has-dropdown is-hoverable">
+                                <a class="navbar-link">
+                                Hi, {{ Auth::user()->name }}
+                                </a>
+
+                                <div class="navbar-dropdown">
+                                <a class="navbar-item">
+                                    Profile
+                                </a>
+                                <a class="navbar-item" href="/posts/create">
+                                    New Post
+                                </a>
+                                <a class="navbar-item" href="/subweddits/create">
+                                    New Subweddit
+                                </a>
+                                <hr class="navbar-divider">
+                                <a class="navbar-item"> 
+                                    <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+
+                                    <x-jet-dropdown-link href="{{ route('logout') }}"
+                                                         onclick="event.preventDefault();
+                                                                    this.closest('form').submit();">
+                                                            {{ __('Logout') }}
+                                    </x-jet-dropdown-link>
+                                    </form>
+                                </a>
+                                </div>
+                            </div>
                             @else
                                 <a href="{{ route('login') }}" class="button is-primary">Login</a>
 
@@ -61,7 +81,6 @@
                             @endauth
                         </div>
                     @endif
-                </div>
                 </div>
             </div>
         </nav>

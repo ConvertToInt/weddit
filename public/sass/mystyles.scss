@@ -4,13 +4,20 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
 // Set your brand colors
-$yellow: #f9ed49;
+$yellow:#f9ed49;
+$grey:#1a1a1b; //reddit navbar
+$black:#030303; //reddit body
 
 // Update Bulma's global variables
 $primary:$yellow;
+$dark:$grey;
+$black:$black;
 
 // Component variables
 $navbar-padding-vertical:0;
+$navbar-item-img-max-height:5em;
 
 @import "../../node_modules/bulma/sass/utilities/_all.sass";
+@import "../../node_modules/bulma/sass/base/_all.sass";
+@import "../../node_modules/bulma/sass/elements/_all.sass";
 @import "../../node_modules/bulma/sass/components/navbar.sass";
