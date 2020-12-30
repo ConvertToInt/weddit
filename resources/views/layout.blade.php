@@ -51,9 +51,9 @@
                     @if (Route::has('login'))
                         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                             @auth
-                                <a href="{{ url('/dashboard') }}" class="buttons is-warning">Home</a>
+                                <a href="{{ url('/dashboard') }}" class="buttons is-primary">Home</a>
                             @else
-                                <a href="{{ route('login') }}" class="button is-warning">Login</a>
+                                <a href="{{ route('login') }}" class="button is-primary">Login</a>
 
                                 @if (Route::has('register'))
                                     <a href="{{ route('register') }}" class="button is-light"><strong>Sign up</strong></a>
