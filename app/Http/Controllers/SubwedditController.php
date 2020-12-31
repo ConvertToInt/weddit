@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Subweddit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class SubwedditController extends Controller
 {
@@ -12,33 +14,40 @@ class SubwedditController extends Controller
         return view('subweddit.index', ['subweddits' => $subweddits]);
     } 
 
-    public function create(){
+    public function create(){ //NEEDS VALIDATION - ONLY ONE 'WALLSTREETBOTS' ALLOWED
         return view('subweddits.create');
     }
 
     public function store(Request $request){
 
         $request->validate([
-            'title' => 'required|max:255',
+            'name' => 'required|max:255',
             'bio' => 'required|max:64000',
             //'upload' => 'required|max:2000',
         ]);
 
-        $upload = new Upload;
+        $subweddit = new Subweddit;
         //$upload->mimeType = $request->file('subweddit')->getMimeType();
         //$upload->path = $request->file('subweddit')->store('subweddits');
-        $upload->title = $request->title;
-        $upload->bio = $request->bio;
-        $upload->user_id = Auth::id();
-        $upload->save();
+        $subweddit->name = $request->name;
+        $subweddit->bio = $request->bio;
+        $subweddit->mod_id = Auth::id();
+        $subweddit->save();
         
-        return view('uploads.create', ['upload'=>$upload]);
+        return view('subweddits.create', ['subweddit'=>$subweddit]);
     }
 
     
-    public function show($id){
-        $subweddit = Subweddit::find($id);
+    public function show($name){
+        $subweddit = Subweddit::find($name);
 
         return view('subweddits.show', ['subweddit'=>$subweddit]);
+    }
+    
+    public function delete(Subweddit $subweddit){
+        $subweddit = Upload::findOrFail($subweddit->id);
+        Storage::Delete($subweddit->path);
+        $subweddit->delete();
+        return back()->with(['operation'=>'deleted', 'id'=>$subweddit->id]);
     }
 }
