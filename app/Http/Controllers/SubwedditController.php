@@ -37,11 +37,18 @@ class SubwedditController extends Controller
         return view('subweddits.create', ['subweddit'=>$subweddit]);
     }
 
-    
     public function show($name){
-        $subweddit = Subweddit::find($name);
 
-        return view('subweddits.show', ['subweddit'=>$subweddit]);
+        $subweddit = \DB::table('subweddits')->where('name', $name)->first();
+
+
+        //if (!array_key_exists($subweddit, $subweddits)){
+        //    abort(404,'Sorry, that subweddit was not found!'); //THIS IS SOME VALIDATION, MAYBE LEAVE OUT OF SCREENSHOTS UNTIL END
+        //}
+        //else{
+            return view('subweddits.show', ['subweddit'=>$subweddit]);
+        //}
+        
     }
     
     public function delete(Subweddit $subweddit){

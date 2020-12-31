@@ -15,13 +15,11 @@ use App\Http\Controllers\SubwedditController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
-
-Route::get('subweddit/{subweddit}', [SubwedditController::class, 'show']);
-Route::get('/subweddits/create', [SubwedditController::class, 'create']);
-Route::post('/subweddits', [SubwedditController::class, 'store'])->middleware('can:create,App\Models\Upload');
+Route::get('/', [SubwedditController::class, 'index']);
+Route::get('/w/create', [SubwedditController::class, 'create']);
+Route::post('/w', [SubwedditController::class, 'store']);
+Route::get('/w/{subweddit}', [SubwedditController::class, 'show']);
+Route::delete('/w/{subweddit}', [SubwedditController::class, 'delete']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
