@@ -22,7 +22,9 @@ class SubwedditFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'mod_id' => \App\Models\User::factory(),
+            'name' => $this->faker->sentence,
+            'bio' => $this->faker->sentence
         ];
     }
 }

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subweddit;
 use Illuminate\Http\Request;
 
 class SubwedditController extends Controller
 {
-    /* public function index(){
+    public function index(){
         $subweddits = Subweddit::with('user')->get();
         return view('subweddit.index', ['subweddits' => $subweddits]);
     } 
@@ -32,11 +33,20 @@ class SubwedditController extends Controller
         $upload->save();
         
         return view('uploads.create', ['upload'=>$upload]);
-    } */
+    }
 
+    
+    public function show($id){
+        $subweddit = Subweddit::find($id);
+
+        return view('subweddits.show', ['subweddit'=>$subweddit]);
+    }
+    
+    
+    
     /* public function show(Upload $upload,$origName=''){
         $upload = Upload::findOrFail($upload->id);
         //return response()->file(storage_path() . '/app/' . $upload->path);
-        return view('uploads.show', ['upload'=>$upload]);
+        return view('uploads.show', ['upload'=>$upload]); 
     } */
 }
