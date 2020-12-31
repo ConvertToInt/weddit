@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Http\Controllers\SubwedditController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+
+Route::get('subweddit/{subweddit}', [SubwedditController::class, 'show']);
+Route::get('/subweddits/create', [SubwedditController::class, 'create']);
+Route::post('/subweddits', [SubwedditController::class, 'store'])->middleware('can:create,App\Models\Upload');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
