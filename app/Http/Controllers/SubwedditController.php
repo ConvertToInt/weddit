@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subweddit;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -42,9 +43,14 @@ class SubwedditController extends Controller
         //$subweddit = \DB::table('subweddits')->where('name', $name)->first();
 
         $subweddit = Subweddit::where('name', $name)->firstOrFail(); // uses elequent to locate a row where 'name' is equal to the value given in the uri (or fail)
+        $posts = Post::where('subweddit_id', $subweddit->id)->get(); // again, using elequent, gets the posts where the subweddit_id is equal to the id of the given subweddit
 
-        return view('subweddits.show', ['subweddit'=>$subweddit]);
-        
+        //dd($posts);
+
+         return view('subweddits.show', [
+            'subweddit'=>$subweddit,
+            'posts'=>$posts]); 
+
     }
     
     public function delete(Subweddit $subweddit){
