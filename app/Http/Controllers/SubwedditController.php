@@ -39,22 +39,18 @@ class SubwedditController extends Controller
 
     public function show($name){
 
-        $subweddit = \DB::table('subweddits')->where('name', $name)->first();
+        //$subweddit = \DB::table('subweddits')->where('name', $name)->first();
 
+        $subweddit = Subweddit::where('name', $name)->firstOrFail(); // uses elequent to locate a row where 'name' is equal to the value given in the uri (or fail)
 
-        //if (!array_key_exists($subweddit, $subweddits)){
-        //    abort(404,'Sorry, that subweddit was not found!'); //THIS IS SOME VALIDATION, MAYBE LEAVE OUT OF SCREENSHOTS UNTIL END
-        //}
-        //else{
-            return view('subweddits.show', ['subweddit'=>$subweddit]);
-        //}
+        return view('subweddits.show', ['subweddit'=>$subweddit]);
         
     }
     
     public function delete(Subweddit $subweddit){
-        $subweddit = Upload::findOrFail($subweddit->id);
+        $subweddit = Subweddit::findOrFail($subweddit->id);
         Storage::Delete($subweddit->path);
         $subweddit->delete();
-        return back()->with(['operation'=>'deleted', 'id'=>$subweddit->id]);
+        //return view('subweddits.index'); SHOULD GO BACK TO HOME PAGE WHEN DELETED, SHOULd THERE BE A SUCCESS MESSAGE? YEAH PROBABLY DO THAT
     }
 }
