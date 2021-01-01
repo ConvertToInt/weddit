@@ -26,7 +26,7 @@ class AddSubwedditIdToPostsTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropForeign('subweddit_id');
+            $table->dropForeign(['subweddit_id']);
         });
     }
 }
