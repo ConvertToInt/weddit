@@ -23,7 +23,7 @@ Route::get('/w/{subweddit}', [SubwedditController::class, 'show']);
 Route::delete('/w/{subweddit}', [SubwedditController::class, 'delete']);
 
 Route::post('/w/{subweddit}', [PostController::class, 'store']);
-
+Route::get('/w/{subweddit}/comments/{id}/{name}', [PostController::class, 'show']);
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+    public function show($subweddit, $id, $name){
+
+        $subweddit = Subweddit::where('name', $subweddit)->firstOrFail(); // uses elequent to locate a subweddit where 'name' is equal to the value given in the uri (or fail)
+        $post = Post::where('id', $id)->firstOrFail(); // again, using elequent, gets the post where the id is equal to the id passed in the URI (or fail)
+
+        return view('posts.show', [
+            'subweddit'=>$subweddit,
+            'post'=>$post]);
+
+    }
+
     public function store(Request $request, $name){
 
         $request->validate([
@@ -19,8 +30,6 @@ class PostController extends Controller
         ]);
 
         $subweddit = Subweddit::where('name', $name)->firstOrFail();
-
-        //dd($subweddit);
 
         $post = new Post;
         //$upload->mimeType = $request->file('subweddit')->getMimeType();
@@ -32,22 +41,5 @@ class PostController extends Controller
         $post->save();
         
         return back();
-
-
-
-       /*  $attributes = request()->validate([ // validates the request & saves the validated values to an array
-            'title' => 'required|max:300', 
-            'body' => 'required|max:3000']); // both title and body are required and have max chars the same as a 'reddit.com' post
-
-        $subweddit = Subweddit::where('name', $name)->firstOrFail();
-
-        Post::create([
-            'user_id' => Auth::id(),
-            'title' => $attributes['title'],
-            'body' => $attributes['body'],
-            'subweddit_id' => ($subweddit->id)
-        ]);
-
-        return redirect('/w/', $subweddit->name); */
     }
 }
