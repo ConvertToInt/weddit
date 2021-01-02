@@ -5,7 +5,7 @@
 
         <title>Weddit | Home</title>
 
-        <link rel="stylesheet" href="../css/mystyles.css">
+        <link rel="stylesheet" href="{{url('css/mystyles.css')}}">
 
         <style>
             body {
@@ -27,7 +27,7 @@
 
             <div class="navbar-brand">
                 <a class="navbar-item" href="home">
-                <img src="../images/navlogo.png" width="150" height="300">
+                <img src="{{url('images/navlogo.png')}}" width="150" height="300">
                 </a>
             </div>
 
