@@ -5,12 +5,18 @@
 @endsection
 
 @section('content')
-    <h1>{{ $subweddit->name }}</h1><br><br>
 
-    <h2>{{ $post->name }}</h2>
-    <h2>{{ $post->body }}</h2>
+    @include('_post-expanded')
 
-    {{-- @include('_post-expanded')
+    <form method ="POST"
+                action='{{url("/w/{$subweddit->name}/comments/{$post->id}/{$post->title}/edit")}}'  
+                style="display:inline!Important;"
+            >
 
-    @include('_post-comments') --}}
+                @csrf
+                @method('get')
+                <input type="submit" value="Edit" style="display:inline!important;">
+    </form>
+
+    {{-- @include('_post-comments') --}}
 @endsection
