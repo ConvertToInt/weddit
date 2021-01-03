@@ -75,4 +75,20 @@ class PostController extends Controller
         $post->save();
         return back();
     }
+
+    public function destroy($subweddit, $id, $title){
+
+        $subweddit = Subweddit::where('name', $subweddit)->firstOrFail(); // uses elequent to locate a subweddit where 'name' is equal to the value given in the uri (or fail)
+        $post = Post::where('id', $id)->firstOrFail();
+
+        $post = Post::findOrFail($post->id);
+        //Storage::Delete($upload->path);
+        $post->delete();
+
+        $posts = Post::where('subweddit_id', $subweddit->id)->get();
+
+        return view('subweddits.show',
+                    ['subweddit'=>$subweddit,
+                    'posts'=>$posts]);
+    }
 }

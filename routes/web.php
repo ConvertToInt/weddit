@@ -26,6 +26,7 @@ Route::post('/w/{subweddit}', [PostController::class, 'store']);
 Route::get('/w/{subweddit}/comments/{id}/{title}/edit', [PostController::class, 'edit']);
 Route::get('/w/{subweddit}/comments/{id}/{title}', [PostController::class, 'show']);
 Route::put('/w/{subweddit}/comments/{id}/{title}', [PostController::class, 'update']);
+Route::delete('/w/{subweddit}/comments/{id}/{title}', [PostController::class, 'destroy']);
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
