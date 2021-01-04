@@ -21,6 +21,11 @@ class PostController extends Controller
 
     }
 
+    public function file($name, $id, $title){
+        $post = Post::where('id', $id)->firstOrFail();
+        return response()->file(storage_path() . '/app/' . $post->thumbnail);
+    }
+
     public function store(Request $request, $name){
 
         $request->validate([
@@ -33,7 +38,7 @@ class PostController extends Controller
 
         $post = new Post;
         //$upload->mimeType = $request->file('subweddit')->getMimeType();
-        //$upload->path = $request->file('subweddit')->store('subweddits');
+        $post->thumbnail = $request->file('thumbnail')->store('posts' . '/' . $subweddit->name);
         $post->title = $request->title;
         $post->body = $request->body;
         $post->user_id = Auth::id();

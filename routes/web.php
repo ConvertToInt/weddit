@@ -28,6 +28,8 @@ Route::get('/w/{subweddit}/comments/{id}/{title}', [PostController::class, 'show
 Route::put('/w/{subweddit}/comments/{id}/{title}', [PostController::class, 'update']);
 Route::delete('/w/{subweddit}/comments/{id}/{title}', [PostController::class, 'destroy']);
 
+Route::get('/w/{subweddit}/{id}/{title}/thumbnail', [PostController::class, 'file']);
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

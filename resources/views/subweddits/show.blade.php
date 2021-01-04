@@ -17,11 +17,17 @@
         <input type="submit" value="Delete" style="display:inline!important;">
     </form><br>
 
+    {{-- @auth
+        @include('_create-post-panel')
+    @endauth --}}
+
     @include('_create-post-panel')
 
     @foreach ($posts as $post)
         {{-- @include('_post') --}}
         <h1> {{ $post->title }} </h1>
-        <h2> {{ $post->body }} </h2>
+        <h2> {{ $post->body }} </h2> 
+        <h2> {{ $post->thumbnail }} </h2> 
+        <img height="25%" width="25%" src="{{url('/w', [$subweddit->name, $post->id, $post->title, 'thumbnail'])}}">
     @endforeach
 @endsection
