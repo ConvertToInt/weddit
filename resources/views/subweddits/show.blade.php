@@ -28,6 +28,6 @@
         <h1> {{ $post->title }} </h1>
         <h2> {{ $post->body }} </h2> 
         <h2> {{ $post->thumbnail }} </h2> 
-        <img height="25%" width="25%" src="{{url('/w', [$subweddit->name, $post->id, $post->title, 'thumbnail'])}}">
+        <img height="25%" width="25%" src="{{url('/w', [$subweddit->name, $post->id, $post->title, 'thumbnail'])}}"> {{-- if exists then show file, if not show default.jpg (weddit logo) (add to stoarage) --}}
     @endforeach
 @endsection
