@@ -1,7 +1,11 @@
 @extends('layout')
 
 @section('head')
-
+<style>
+    .display-comment .display-comment{
+        margin-left: 40px
+    }
+</style>
 @endsection
 
 @section('content')
@@ -16,7 +20,13 @@
                 @csrf
                 @method('get')
                 <input type="submit" value="Edit" style="display:inline!important;">
-    </form>
+    </form><br>
 
-    {{-- @include('_post-comments') --}}
+    <br>
+
+    @include('_comments-replies')
+
+    <br>
+
+    @include('_comment-form')
 @endsection

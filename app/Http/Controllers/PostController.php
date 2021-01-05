@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Subweddit;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -14,10 +15,12 @@ class PostController extends Controller
 
         $subweddit = Subweddit::where('name', $subweddit)->firstOrFail(); // uses elequent to locate a subweddit where 'name' is equal to the value given in the uri (or fail)
         $post = Post::where('id', $id)->firstOrFail(); // again, using elequent, gets the post where the id is equal to the id passed in the URI (or fail)
+        $comments = Comment::where('post_id', $id)->whereNull('parent_id')->get();
 
         return view('posts.show', [
             'subweddit'=>$subweddit,
-            'post'=>$post]);
+            'post'=>$post,
+            'comments'=>$comments]);
 
     }
 
