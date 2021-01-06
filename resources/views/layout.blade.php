@@ -79,6 +79,7 @@
             </div>
         </nav>
     @yield ('content')
+    <script src="https://unpkg.com/turbolinks"></script>
     </body>
 </html>
 
