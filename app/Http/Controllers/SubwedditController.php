@@ -24,12 +24,11 @@ class SubwedditController extends Controller
         $request->validate([
             'name' => 'required|max:255',
             'bio' => 'required|max:64000',
-            //'upload' => 'required|max:2000',
+            'logo' => 'required|max:2000',
         ]);
 
         $subweddit = new Subweddit;
-        //$upload->mimeType = $request->file('subweddit')->getMimeType();
-        //$upload->path = $request->file('subweddit')->store('subweddits');
+        $subweddit->logo = $request->file('logo')->store($subweddit->name);
         $subweddit->name = $request->name;
         $subweddit->bio = $request->bio;
         $subweddit->mod_id = Auth::id();
@@ -51,6 +50,12 @@ class SubwedditController extends Controller
             'subweddit'=>$subweddit,
             'posts'=>$posts]); 
 
+    }
+
+    public function logo($subweddit){
+
+        $subweddit = Subweddit::where('name', $subweddit)->firstOrFail();
+        return response()->file(storage_path() . '/app/' . $subweddit->logo);
     }
     
     public function delete(Subweddit $subweddit){
