@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-    @include('_comments-replies', ['comments' => $comment->replies])
+    @include('snippets._comments-replies', ['comments' => $comment->replies])
 </div>
 
 @endforeach

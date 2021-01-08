@@ -3,7 +3,7 @@
             <div class="box has-background-black-ter has-text-grey-lighter">
                 <div class="columns">
                     <div class="column is-2">
-                            <img style="height:80px; width:100px; border-radius:100%" src="{{url('/w', [$subweddit->name, $post->id, $post->title, 'thumbnail'])}}"> {{-- if exists then show file, if not show default.jpg (weddit logo) (add to stoarage) --}}
+                            <img style="height:80px; width:100px; border-radius:12%" src="{{url('/w', [$subweddit->name, $post->id, $post->title, 'thumbnail'])}}"> {{-- if exists then show file, if not show default.jpg (weddit logo) (add to stoarage) --}}
                     </div>
                     <div class="column is-9">
                         <p>
