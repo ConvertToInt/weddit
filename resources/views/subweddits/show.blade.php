@@ -5,9 +5,43 @@
 @endsection
 
 @section('content')
-    <h1>{{ $subweddit->name }}</h1>
-    <h1>{{ $subweddit->bio }}</h1>
-    <img height="25%" width="25%" src="{{url('/w', [$subweddit->name, 'logo'])}}">
+
+    {{-- <section class="hero has-background-yellow">
+    <div class="hero-body">
+            <div class="columns">
+                <div class="column is-1">
+                <img style="border-radius:100%" src="{{url('/w', [$subweddit->name, 'logo'])}}">
+                </div>
+                <div class="column">
+                <h1 class="title has-text-white-bis">
+                    {{ $subweddit->name }}
+                </h1>
+                <h2 class="subtitle has-text-white-bis">
+                    {{ $subweddit->bio }}
+                </h2>
+                </div>
+            </div>
+    </div>
+    </section> --}}
+
+    <div class="columns is-centered">
+        <div class="column is-half">
+            <div class="columns is-centeres">
+                <div class="column is-2">
+                    <img style="border-radius:100%" src="{{url('/w', [$subweddit->name, 'logo'])}}">
+                </div>
+                <div class="column">
+                    <h1 class="title has-text-white-bis">
+                        {{ $subweddit->name }}
+                    </h1>
+                    <h2 class="subtitle has-text-white-bis">
+                        {{ $subweddit->bio }}
+                    </h2>
+                </div>  
+            </div>
+        </div>     
+    </div>
+
 
     {{-- @include('_follow-button') --}}
 
@@ -30,16 +64,11 @@
         <input type="submit" value="Delete" style="display:inline!important;">
     </form><br>
 
-    {{-- @auth
+    @auth
         @include('_create-post-panel')
-    @endauth --}}
-
-    @include('_create-post-panel')
+    @endauth
 
     @foreach ($posts as $post)
-        {{-- @include('_post') --}}
-        <h1> {{ $post->title }} </h1>
-        <h2> {{ $post->body }} </h2>
-        <img height="25%" width="25%" src="{{url('/w', [$subweddit->name, $post->id, $post->title, 'thumbnail'])}}"> {{-- if exists then show file, if not show default.jpg (weddit logo) (add to stoarage) --}}
+        @include('_post')
     @endforeach
 @endsection

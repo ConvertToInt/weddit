@@ -1,44 +1,58 @@
 @foreach($comments as $comment)
 <div class="display-comment">
-    <strong>{{ $comment->user->name }}</strong>
-        <p>{{ $comment->body }}</p>
-        <form method="post" action='{{url("/w/$subweddit->name/$post->id/$post->title/reply")}}'>
-            @csrf
-            <input type="text" name="body" />
-            <input type="hidden" name="post_id" value="{{ $post->id }}" />
-            <input type="hidden" name="parent_id" value="{{ $comment->id }}" />
-            <input type="submit" class="btn btn-warning" value="Reply" />
-        </form>
+    <div class="columns is-centered">
+        <div class="column is-half">
+            <div class="box has-background-black-ter has-text-grey-lighter">
+                <div class="columns">
+                    <div class="column is-11">
+                        <p>
+                            <small>Comment by u/{{$comment->user->username}}</small> <small>{{$comment->created_at->diffForHumans()}}</small> {{-- diffforhumans uses created at to calculate time since creation --}}
+                            <br><br>
+                            <p class="is-5 has-text-grey-lighter">{{$comment->body}}</p>
+                        </p>
+                    </div>
+                    @if (Auth::user()->id = $comment->user_id or Auth::user()->id = $subweddit->mod_id)
+                        <div class="column is-1">
+                            <form method ="POST"
+                                    action='{{url("/w/{$subweddit->name}/{$post->id}/{$post->title}/{$comment->id}/delete")}}'  
+                                    style="display:inline!Important;">
 
-        @include('_comments-replies', ['comments' => $comment->replies])
-    
-   {{--  @if ( $comment->replies )
-        @foreach($comment->replies as $rep1)
-            &nbsp;&nbsp;&nbsp;&nbsp;{{ $rep1->body }}
-            &nbsp;&nbsp;&nbsp;&nbsp;<a href="" id="reply"></a>
-            <form method="post" action='{{url("/w/$subweddit->name/$post->id/$post->title/reply")}}'>
-            @csrf
-            &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="body" />
-            <input type="hidden" name="post_id" value="{{ $post->id }}" />
-            <input type="hidden" name="parent_id" value="{{ $rep1->id }}" />
-            <input type="submit" class="btn btn-warning" value="Reply" />
-            </form>
+                                    @csrf
+                                    @method('delete')
 
-            @if ( $rep1->replies )
-                @foreach($rep1->replies as $rep2)
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $rep2->body }}
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="" id="reply"></a>
-                <form method="post" action='{{url("/w/$subweddit->name/$post->id/$post->title/reply")}}'>
-                @csrf
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="body" />
-                <input type="hidden" name="post_id" value="{{ $post->id }}" />
-                <input type="hidden" name="parent_id" value="{{ $rep2->id }}" />
-                <input type="submit" class="btn btn-warning" value="Reply" />
-                </form>
-                @endforeach
-            @endif
+                                    <div class="field">
+                                        <div class="control">
+                                            <button class="submit delete is-primary">Edit</button>
+                                        </div>
+                                    </div>
+                            </form>  
+                        </div>
+                    @endif
+                </div>
 
-        @endforeach
-    @endif --}}
+                <div class="columns is-centered">
+                    <div class="column is-12">
+                        <form method="post" action='{{url("/w/$subweddit->name/$post->id/$post->title/reply")}}'>
+                            @csrf
+
+                            <div class="field has-addons">
+                                <div class="control is-expanded">
+                                    <input class="input is-small" type="text" name="body">
+                                </div>
+                                <div class="control">
+                                    <button class="button is-primary is-small">Reply</button>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="post_id" value="{{ $post->id }}" />
+                            <input type="hidden" name="parent_id" value="{{ $comment->id }}" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    @include('_comments-replies', ['comments' => $comment->replies])
+</div>
+
 @endforeach

@@ -3,7 +3,7 @@
 @section('head')
 <style>
     .display-comment .display-comment{
-        margin-left: 40px
+        margin-left: 40px;
     }
 </style>
 @endsection
@@ -12,21 +12,11 @@
 
     @include('_post-expanded')
 
-    <form method ="POST"
-                action='{{url("/w/{$subweddit->name}/comments/{$post->id}/{$post->title}/edit")}}'  
-                style="display:inline!Important;"
-            >
-
-                @csrf
-                @method('get')
-                <input type="submit" value="Edit" style="display:inline!important;">
-    </form><br>
-
     <br>
-
+    <h1 class="title has-text-centered has-text-weight-bold is-size-3 has-text-grey-lighter mb-6">Replies</h1>
     @include('_comments-replies')
 
     <br>
-
+    <h1 class="title has-text-centered has-text-weight-bold is-size-3 has-text-grey-lighter mb-6">Post a comment</h1>
     @include('_comment-form')
 @endsection

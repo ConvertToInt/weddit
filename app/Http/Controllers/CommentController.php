@@ -36,11 +36,20 @@ class CommentController extends Controller
         return back();
     }
 
-    public function update() {
-         
-    }
+    public function delete($subweddit, $id, $title, $comment) {
+        $subweddit = Subweddit::where('name', $subweddit)->firstOrFail(); // uses elequent to locate a subweddit where 'name' is equal to the value given in the uri (or fail)
+        $post = Post::where('id', $id)->firstOrFail();
+        $comment = Comment::where('id', $comment)->firstOrFail();
 
-    public function delete() {
+        $comment = Comment::findOrFail($comment->id);
+        //Storage::Delete($upload->path);
+        $comment->delete();
+        
+        $comments = Comment::where('post_id', $id)->whereNull('parent_id')->get();
 
+        return view('posts.show',
+                    ['subweddit'=>$subweddit,
+                    'post'=>$post,
+                    'comments'=>$comments]);
     }
 }
