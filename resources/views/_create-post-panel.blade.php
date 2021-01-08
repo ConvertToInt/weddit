@@ -1,9 +1,20 @@
----------------------------------------
-<form method ="POST" action='' enctype ="multipart/form-data">
-    @csrf
-    <input type="file" name="thumbnail"><br>
-    <input type="text" name="title">Title<br>
-    <textarea name="body"></textarea>Body<br>
-    <input type="submit" value="Save Upload">
-</form>
--------------------------------------
+<div class= "columns is-centered">
+    <div class="column is-6">
+        <div class="box has-background-black-ter">
+            <div class= "columns is-centered">
+                {{-- <div class="column is-1">
+                    <img href=""/>
+                </div> --}} 
+                <div class="column is-12">
+                    <a href="/w/{{$subweddit->name}}/submit">
+                    <div class="field">
+                        <div class="control">
+                            <input class="input has-background-grey-darker" placeholder="Create Post">
+                        </div>
+                    </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
