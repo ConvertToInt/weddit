@@ -26,10 +26,11 @@
             </div>
         </div>     
     </div>
-    
+
     @if ($posts->isEmpty())
         <div class="columns is-centered">
         <div class="column is-half">
+        <h1 class="title has-text-centered has-text-weight-bold is-size-3 has-text-grey-lighter mb-6">No Posts yet..</h1>
         @auth
             @include('snippets._create-post-panel')
         @endauth
@@ -37,7 +38,6 @@
         <div class="column"></div>
     </div>
     @else
-    
     <div class="columns is-centered">
     <div class="column"></div>
         <div class="column is-half">
