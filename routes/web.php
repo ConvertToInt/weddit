@@ -30,7 +30,7 @@ Route::get('/w/{subweddit}/submit', [PostController::class, 'create']);
 Route::post('/w/{subweddit}/toggleFollow', [FollowsController::class, 'toggle']); // :name means you dont have to bind the subweddit
 Route::get('/w/{subweddit}/comments/{id}/{title}/edit', [PostController::class, 'edit']); 
 Route::get('/w/{subweddit}/comments/{id}/{title}', [PostController::class, 'show']); // when taking in id (which is post id) here you could pick it up as Post id or smth, to collect the object, the subweddit uses name so you cannot (worth changing)
-Route::get('/w/{subweddit}/{id}/{title}/thumbnail', [PostController::class, 'thumbnail']);
+Route::get('/w/{subweddit}/{id}/{title}/img', [PostController::class, 'img']);
 Route::put('/w/{subweddit}/comments/{id}/{title}', [PostController::class, 'update']); //id is the post id.. bit ambiguous, could be the comment id
 Route::delete('/w/{subweddit}/comments/{id}/{title}', [PostController::class, 'destroy']);
 

@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Auth;
 class SubwedditController extends Controller
 {
     public function index(){
-        $subweddits = Subweddit::with('user')->get();
-        return view('subweddit.index', ['subweddits' => $subweddits]);
+        return view('home', [
+            'posts' => auth()->user()->timeline()
+        ]);
     } 
 
     public function create(){ //NEEDS VALIDATION - ONLY ONE 'WALLSTREETBOTS' ALLOWED
@@ -22,17 +23,19 @@ class SubwedditController extends Controller
     public function store(Request $request){
 
         $request->validate([
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique:subweddits|alpha_dash', // name is unique in the subweddits table
             'bio' => 'required|max:64000',
-            'logo' => 'required|max:2000',
+            'logo' => 'required|image|mimes:jpg,jpeg,png,svg,gif|max:2048', // file must be an image and have the following extensions
         ]);
 
         $subweddit = new Subweddit;
-        $subweddit->logo = $request->file('logo')->store($subweddit->name);
+        $subweddit->logo = $request->file('logo')->store('subweddits' . '/' . $request->name);
         $subweddit->name = $request->name;
         $subweddit->bio = $request->bio;
         $subweddit->mod_id = Auth::id();
         $subweddit->save();
+
+        
         
         return view('subweddits.create', ['subweddit'=>$subweddit]);
     }
