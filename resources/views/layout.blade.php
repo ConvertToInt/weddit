@@ -13,8 +13,12 @@
                 font-family: 'Nunito';
             }
 
-            .navbar{
-                padding:0;
+            .box{
+                border:1px solid grey;
+            }
+
+            .image{
+                border:1px solid grey;
             }
         </style>
 

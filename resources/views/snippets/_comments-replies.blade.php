@@ -37,7 +37,7 @@
 
                             <div class="field has-addons">
                                 <div class="control is-expanded">
-                                    <input class="input is-small" type="text" name="body">
+                                    <input class="input is-small" type="text" name="body"  placeholder="Write a reply...">
                                 </div>
                                 <div class="control">
                                     <button class="button is-primary is-small">Reply</button>

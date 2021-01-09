@@ -6,37 +6,16 @@
 
 @section('content')
 
-    {{-- <section class="hero has-background-yellow">
-    <div class="hero-body">
-            <div class="columns">
-                <div class="column is-1">
-                <img style="border-radius:100%" src="{{url('/w', [$subweddit->name, 'logo'])}}">
-                </div>
-                <div class="column">
-                <h1 class="title has-text-white-bis">
-                    {{ $subweddit->name }}
-                </h1>
-                <h2 class="subtitle has-text-white-bis">
-                    {{ $subweddit->bio }}
-                </h2>
-                </div>
-            </div>
-    </div>
-    </section> --}}
-
-    <div class="columns is-centered">
+    <div class="columns is-centered mb-6">
         <div class="column is-half">
-            <div class="columns is-centeres">
+            <div class="columns is-vcentered">
                 <div class="column is-2">
-                    <img style="border-radius:100%" src="{{url('/w', [$subweddit->name, 'logo'])}}">
+                    <img style="border-radius:15%" src="{{url('/w', [$subweddit->name, 'logo'])}}">
                 </div>
                 <div class="column">
-                    <h1 class="title has-text-white-bis">
+                    <h1 class="title is-1 has-text-white-bis">
                         {{ $subweddit->name }}
                     </h1>
-                    <h2 class="subtitle has-text-white-bis">
-                        {{ $subweddit->bio }}
-                    </h2>
                 </div>  
             </div>
         </div>     
@@ -65,10 +44,10 @@
     </form><br>
 
     @auth
-        @include('_create-post-panel')
+        @include('snippets._create-post-panel')
     @endauth
 
     @foreach ($posts as $post)
-        @include('_post')
+        @include('snippets._post')
     @endforeach
 @endsection
