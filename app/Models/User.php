@@ -62,6 +62,12 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    public function timeline(){
+        $posts = $this->follows->pluck('id');
+
+        return Post::whereIn('subweddit_id', $posts)->latest()->get();
+    }
+
     public function post() {
         return $this->hasMany('App\Models\Post');
     }

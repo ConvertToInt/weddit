@@ -7,13 +7,13 @@
             @csrf
                 <div class="field">
                 <p class="control">
-                    <textarea name ="body" class="textarea" placeholder="Add a comment..."></textarea>
+                    <textarea name ="body" class="textarea has-background-grey-darker has-text-white-bis" placeholder="Add a comment..."></textarea>
                 </p>
                 </div>
                 <nav class="level">
                 <div class="level-left">
                     <div class="level-item">
-                        <input type="submit" class="button is-primary" value="Post Comment"></a>
+                        <input type="submit" class="button is-warning" value="Post Comment"></a>
                     </div>
                 </div>
                 </nav>

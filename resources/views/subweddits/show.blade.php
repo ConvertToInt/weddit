@@ -17,37 +17,33 @@
                         {{ $subweddit->name }}
                     </h1>
                 </div>  
+                <div class="column is-2">
+                @include('snippets._follow-button')
+                </div>  
+                <div class="column is-1">
+                @include('snippets._delete-button')
+                </div> 
+                
             </div>
         </div>     
     </div>
 
+    
 
-    {{-- @include('_follow-button') --}}
+    <div class="columns is-centered">
+        <div class="column"></div>
+        <div class="column is-half">
+        @auth
+            @include('snippets._create-post-panel')
+        @endauth
+        @foreach ($posts as $post)
+            @include('snippets._post')
+        @endforeach
+        </div>
+        <div class="column is-one-quarter">
+            @include('snippets._subweddit-bio')
+        </div>
+        <div class="column"></div>
+    </div>
 
-    <form method ="POST"
-        action='{{url("/w/{$subweddit->id}/toggleFollow")}}'  
-        style="display:inline!Important;">
-        @csrf
-
-        <button type="submit">
-            {{ auth()->user()->following($subweddit->id) ? 'Unfollow' : 'Follow'}}
-        </button>
-    </form><br>
-
-    <form method ="POST" 
-        action='{{url("/w/{$subweddit->id}")}}'  
-        style="display:inline!Important;">
-
-        @csrf
-        @method('delete')
-        <input type="submit" value="Delete" style="display:inline!important;">
-    </form><br>
-
-    @auth
-        @include('snippets._create-post-panel')
-    @endauth
-
-    @foreach ($posts as $post)
-        @include('snippets._post')
-    @endforeach
 @endsection

@@ -10,15 +10,19 @@
 
         <style>
             body {
-                font-family: 'Nunito';
+                font-family: 'Verdana';
             }
 
             .box{
-                border:1px solid grey;
+                border:1px solid #383838;
             }
 
             .image{
-                border:1px solid grey;
+                border:1px solid #383838;
+            }
+
+            .navbar{
+                border-bottom:1px solid #383838
             }
         </style>
 
@@ -26,10 +30,10 @@
 
     </head>
     
-    <body class ="has-background-black">
-    <nav class="navbar has-background-black-bis mb-6" role="navigation" aria-label="main navigation">
+    <body class ="has-background-black-bis">
+    <nav class="navbar has-background-black-ter mb-6" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="navbar-item" href="home">
+            <a class="navbar-item" href="/">
             <img src="{{url('images/navlogo.png')}}" width="150" height="300">
             </a>
         </div>
@@ -41,7 +45,7 @@
                             <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                                 @auth
                                 <div class="navbar-item has-dropdown is-hoverable">
-                                    <a class="navbar-link">
+                                    <a class="navbar-link has-text-white-ter">
                                     Hi, {{ Auth::user()->name }}
                                     </a>
 

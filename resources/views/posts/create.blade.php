@@ -28,9 +28,9 @@
         </div>
 
         <div class="field">
-            <label class="label is-medium has-text-grey-lighter">Thumbnail</label>
+            <label class="label is-medium has-text-grey-lighter">Image (optional)</label>
             <div class="control">
-                <input class="input" type="file" name="thumbnail">
+                <input class="input" type="file" name="img">
             </div>
         </div>
 

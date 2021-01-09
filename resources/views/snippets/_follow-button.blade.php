@@ -1,11 +1,8 @@
-<form method ="POST" 
-        action='{{url("/w/{$subweddit->name}/follow")}}'  
-        style="display:inline!Important;">
-        @csrf
+<form method ="POST"
+    action='{{url("/w/{$subweddit->id}/toggleFollow")}}'>
+    @csrf
 
-        <button type="submit">
-            {{ auth()->user()->following($subweddit->id) ? 'Unfollow' : 'Follow'}}
-        </button>
-
-        
-    </form><br>
+    <button class="button is-primary" type="submit">
+        {{ auth()->user()->following($subweddit->id) ? 'Unfollow' : 'Follow'}}
+    </button>
+</form>

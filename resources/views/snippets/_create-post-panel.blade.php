@@ -1,5 +1,4 @@
-<div class= "columns is-centered">
-    <div class="column is-6">
+
         <div class="box has-background-black-ter">
             <div class= "columns is-centered">
                 {{-- <div class="column is-1">
@@ -15,6 +14,4 @@
                     </a>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
+        </div

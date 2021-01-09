@@ -24,9 +24,17 @@ class PostController extends Controller
 
     }
 
-    public function file($name, $id, $title){
+    public function img($name, $id, $title){
         $post = Post::where('id', $id)->firstOrFail();
-        return response()->file(storage_path() . '/app/' . $post->thumbnail);
+        return response()->file(storage_path() . '/app/' . $post->img);
+    }
+
+    public function create($subweddit){
+        $subweddit = Subweddit::where('name', $subweddit)->firstOrFail();
+
+        return view('posts.create', [ 
+            'subweddit'=>$subweddit]);
+
     }
 
     public function store(Request $request, $name){
@@ -34,21 +42,26 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'body' => 'required|max:64000',
-            //'upload' => 'required|max:2000',
+            'img' => 'image|mimes:jpg,jpeg,png,svg,gif|max:2048',
         ]);
 
         $subweddit = Subweddit::where('name', $name)->firstOrFail();
+        $posts = Post::where('subweddit_id', $subweddit->id)->get();
 
         $post = new Post;
-        //$upload->mimeType = $request->file('subweddit')->getMimeType();
-        $post->thumbnail = $request->file('thumbnail')->store('posts' . '/' . $subweddit->name);
+        if($request->img){
+            $post->img = $request->file('img')->store('subweddits' . '/' . $subweddit->name . '/' . 'posts');
+        }
         $post->title = $request->title;
         $post->body = $request->body;
         $post->user_id = Auth::id();
         $post->subweddit_id = $subweddit->id;
         $post->save();
-        
-        return back();
+         
+        return view('subweddits.show', [
+            'subweddit'=>$subweddit,
+            'posts'=>$posts
+        ]);
     }
 
     public function edit($subweddit, $id, $title){
