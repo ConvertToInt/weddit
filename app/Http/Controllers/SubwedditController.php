@@ -11,9 +11,22 @@ use Illuminate\Support\Facades\Auth;
 class SubwedditController extends Controller
 {
     public function index(){
-        return view('home', [
-            'posts' => auth()->user()->timeline()
-        ]);
+        $subweddits = Subweddit::all();
+        if (auth()->check()) {
+
+            return view('home', [
+                'subweddits' => $subweddits,
+                'posts' => auth()->user()->timeline()
+            ]);
+            
+            } else {
+            $posts = Post::all();
+            return view('home', [
+                'subweddits' => $subweddits,
+                'posts' => $posts
+            ]);
+            
+            }
     } 
 
     public function create(){ 

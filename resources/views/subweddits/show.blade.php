@@ -16,13 +16,15 @@
                     <h1 class="title is-1 has-text-white-bis">
                         {{ $subweddit->name }}
                     </h1>
-                </div>  
+                </div>
+                @auth
                 <div class="column is-2">
                 @include('snippets._follow-button')
                 </div>  
                 <div class="column is-1">
                 @include('snippets._delete-button')
-                </div>    
+                </div>   
+                @endauth     
             </div>
         </div>     
     </div>

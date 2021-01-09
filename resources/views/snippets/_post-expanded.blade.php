@@ -10,6 +10,7 @@
                             <p class="subtitle is-6 has-text-grey-lighter">{{$post->body}}</p>
                         </p>
                     </div>
+                    @auth
                     @if (Auth::user()->id = $post->user_id or Auth::user()->id = $subweddit->mod_id)
                         <div class="column is-1">
                             <form method ="POST"
@@ -27,6 +28,7 @@
                             </form>    
                         </div>
                     @endif
+                    @endauth
                 </div>
                 @if( $post->thumbnail)
                     <div class="columns is-centered">
