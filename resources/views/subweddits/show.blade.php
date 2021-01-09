@@ -22,16 +22,24 @@
                 </div>  
                 <div class="column is-1">
                 @include('snippets._delete-button')
-                </div> 
-                
+                </div>    
             </div>
         </div>     
     </div>
-
     
-
-    <div class="columns is-centered">
+    @if ($posts->isEmpty())
+        <div class="columns is-centered">
+        <div class="column is-half">
+        @auth
+            @include('snippets._create-post-panel')
+        @endauth
+        </div>
         <div class="column"></div>
+    </div>
+    @else
+    
+    <div class="columns is-centered">
+    <div class="column"></div>
         <div class="column is-half">
         @auth
             @include('snippets._create-post-panel')
@@ -45,5 +53,6 @@
         </div>
         <div class="column"></div>
     </div>
+    @endif
 
 @endsection

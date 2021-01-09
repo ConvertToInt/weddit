@@ -16,7 +16,7 @@ class SubwedditController extends Controller
         ]);
     } 
 
-    public function create(){ //NEEDS VALIDATION - ONLY ONE 'WALLSTREETBOTS' ALLOWED
+    public function create(){ 
         return view('subweddits.create');
     }
 
@@ -42,12 +42,8 @@ class SubwedditController extends Controller
 
     public function show($subweddit){
 
-        //$subweddit = \DB::table('subweddits')->where('name', $name)->first();
-
         $subweddit = Subweddit::where('name', $subweddit)->firstOrFail(); // uses elequent to locate a row where 'name' is equal to the value given in the uri (or fail)
         $posts = Post::where('subweddit_id', $subweddit->id)->get(); // again, using elequent, gets the posts where the subweddit_id is equal to the id of the given subweddit
-
-        //dd($posts);
 
          return view('subweddits.show', [
             'subweddit'=>$subweddit,
@@ -65,6 +61,8 @@ class SubwedditController extends Controller
         $subweddit = Subweddit::findOrFail($subweddit->id);
         Storage::Delete($subweddit->path);
         $subweddit->delete();
-        //return view('subweddits.index'); SHOULD GO BACK TO HOME PAGE WHEN DELETED, SHOULd THERE BE A SUCCESS MESSAGE? YEAH PROBABLY DO THAT
+        return view('home', [
+            'posts' => auth()->user()->timeline()
+        ]);
     }
 }
