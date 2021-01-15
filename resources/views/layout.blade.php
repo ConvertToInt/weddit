@@ -3,7 +3,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Weddit | Home</title>
+        <title>Weddit | Home of the internet</title>
+
+        <link rel="shortcut icon" href="images/favicon.ico"/>
 
         <link rel="stylesheet" href="{{url('css/mystyles.css')}}">
         {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"> --}}
@@ -46,31 +48,26 @@
                                 @auth
                                 <div class="navbar-item has-dropdown is-hoverable">
                                     <a class="navbar-link has-text-white-ter">
-                                    Hi, {{ Auth::user()->name }}
+                                    Hi, {{ Auth::user()->username }}
                                     </a>
 
                                     <div class="navbar-dropdown">
-                                    <a class="navbar-item">
-                                        Profile
-                                    </a>
-                                    <a class="navbar-item" href="/posts/create">
+                                    <a class="navbar-item has-text-white-ter" href="">
                                         New Post
                                     </a>
-                                    <a class="navbar-item" href="/subweddits/create">
+                                    <a class="navbar-item has-text-white-ter" href="{{url('w/create')}}">
                                         New Subweddit
                                     </a>
                                     <hr class="navbar-divider">
-                                    <a class="navbar-item"> 
                                         <form method="POST" action="{{ route('logout') }}">
                                         @csrf
 
-                                        <x-jet-dropdown-link href="{{ route('logout') }}"
+                                        <a class="navbar-item has-text-white-ter" href="{{ route('logout') }}"
                                                             onclick="event.preventDefault();
                                                                         this.closest('form').submit();">
                                                                 {{ __('Logout') }}
-                                        </x-jet-dropdown-link>
+                                        </a>
                                         </form>
-                                    </a>
                                     </div>
                                 </div>
                                 @else
@@ -88,7 +85,7 @@
 
             @yield ('content')
 
-        <script src="https://unpkg.com/turbolinks"></script>
+        {{-- <script src="https://unpkg.com/turbolinks"></script> --}}
     </body>
 </html>
 

@@ -1,4 +1,4 @@
-<a href="{{url("/w/{$post->subweddit->name}/comments/{$post->id}/{$post->title}")}}">
+<a href="{{url("/w/{$post->subweddit->name}/comments/{$post->id}/{$post->slug}")}}">
     <div class="box has-background-black-ter mb-3">
         <div class="columns">
             <div class="column is-1">
@@ -19,7 +19,7 @@
                 </div>
             @else
                 <div class="column is-10">
-                    <img src="{{url('/w', [$post->subweddit->name, $post->id, $post->title, 'img'])}}"> {{-- if exists then show file, if not show default.jpg (weddit logo) (add to stoarage) --}}
+                    <img src="{{url('/w', [$post->subweddit->name, $post->id, $post->slug, 'img'])}}"> {{-- if exists then show file, if not show default.jpg (weddit logo) (add to stoarage) --}}
                 </div>
             @endif
             <div class="column"></div>

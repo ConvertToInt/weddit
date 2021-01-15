@@ -8,14 +8,13 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
-    public function show($subweddit, $id, $title){
+    public function show(Subweddit $subweddit, Post $post, $slug){
 
-        $subweddit = Subweddit::where('name', $subweddit)->firstOrFail(); // uses elequent to locate a subweddit where 'name' is equal to the value given in the uri (or fail)
-        $post = Post::where('id', $id)->firstOrFail(); // again, using elequent, gets the post where the id is equal to the id passed in the URI (or fail)
-        $comments = Comment::where('post_id', $id)->whereNull('parent_id')->get();
+        $comments = Comment::where('post_id', $post->id)->whereNull('parent_id')->get();
 
         return view('posts.show', [
             'subweddit'=>$subweddit,
@@ -24,20 +23,17 @@ class PostController extends Controller
 
     }
 
-    public function img($name, $id, $title){
-        $post = Post::where('id', $id)->firstOrFail();
+    public function img(Subweddit $subweddit, Post $post, $slug){
         return response()->file(storage_path() . '/app/' . $post->img);
     }
 
-    public function create($subweddit){
-        $subweddit = Subweddit::where('name', $subweddit)->firstOrFail();
-
+    public function create(Subweddit $subweddit){
         return view('posts.create', [ 
             'subweddit'=>$subweddit]);
 
     }
 
-    public function store(Request $request, $name){
+    public function store(Request $request, Subweddit $subweddit){
 
         $request->validate([
             'title' => 'required|max:255',
@@ -45,18 +41,19 @@ class PostController extends Controller
             'img' => 'image|mimes:jpg,jpeg,png,svg,gif|max:2048',
         ]);
 
-        $subweddit = Subweddit::where('name', $name)->firstOrFail();
-        $posts = Post::where('subweddit_id', $subweddit->id)->get();
-
         $post = new Post;
         if($request->img){
             $post->img = $request->file('img')->store('subweddits' . '/' . $subweddit->name . '/' . 'posts');
         }
         $post->title = $request->title;
         $post->body = $request->body;
+        $post->slug = Str::slug($request->title, '_');
         $post->user_id = Auth::id();
         $post->subweddit_id = $subweddit->id;
         $post->save();
+
+        $posts = Post::where('subweddit_id', $subweddit->id)->get();
+
          
         return view('subweddits.show', [
             'subweddit'=>$subweddit,
@@ -64,46 +61,43 @@ class PostController extends Controller
         ]);
     }
 
-    public function edit($subweddit, $id, $title){
-
-        $subweddit = Subweddit::where('name', $subweddit)->firstOrFail(); // uses elequent to locate a subweddit where 'name' is equal to the value given in the uri (or fail)
-        $post = Post::where('id', $id)->firstOrFail();
+    public function edit(Subweddit $subweddit, Post $post, $title){
 
         return view('posts.edit',
                     ['subweddit'=>$subweddit,
                     'post'=>$post]);
     }
 
-    public function update(Request $request, $subweddit, $id, $title){
+    public function update(Request $request, Subweddit $subweddit, Post $post, $slug){
 
         $request->validate([
             'title' => 'required|max:255',
             'body' => 'required|max:64000',
-            //'upload' => 'required|max:2000',
+            'img' => 'image|mimes:jpg,jpeg,png,svg,gif|max:2048',
         ]);
-
-        $post = Post::where('id', $id)->firstOrFail(); // uses elequent to locate a subweddit where 'name' is equal to the value given in the uri (or fail)
 
         $post = Post::findOrFail($post->id);
         $post->title = $request->title;
         $post->body = $request->body;
-        /* if ($request->hasFile('upload')){
-            Storage::delete($subweddit->path);  
-            $upload->origName = $request->file('upload')->getClientOriginalName();
-            $upload->path = $request->file('upload')->store('uploads');
-            $upload->mimeType = $request->file('upload')->getClientMimeType();
-        } */
+        if ($request->hasFile('img')){
+            Storage::delete($subweddit->img);  
+            $post->img = $request->file('img')->store('subweddits' . '/' . $subweddit->name . '/' . 'posts');        
+        }
         $post->save();
-        return back();
+
+        $posts = Post::where('subweddit_id', $subweddit->id)->get();
+
+        return view('subweddits.show', [
+            'subweddit'=>$subweddit,
+            'posts'=>$posts
+        ]);
     }
 
-    public function destroy($subweddit, $id, $title){
+    public function destroy(Subweddit $subweddit, Post $post, $slug){
 
-        $subweddit = Subweddit::where('name', $subweddit)->firstOrFail(); // uses elequent to locate a subweddit where 'name' is equal to the value given in the uri (or fail)
-        $post = Post::where('id', $id)->firstOrFail();
-
+        $comments = Comment::where('post_id', $post->id)->delete();
         $post = Post::findOrFail($post->id);
-        //Storage::Delete($upload->path);
+        Storage::Delete($post->img);
         $post->delete();
 
         $posts = Post::where('subweddit_id', $subweddit->id)->get();

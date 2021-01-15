@@ -17,14 +17,16 @@
                         {{ $subweddit->name }}
                     </h1>
                 </div>
-                @auth
+                {{-- @auth --}}
                 <div class="column is-2">
                 @include('snippets._follow-button')
-                </div>  
+                </div>
+                {{-- @can('delete', $subweddit) --}}
                 <div class="column is-1">
                 @include('snippets._delete-button')
                 </div>   
-                @endauth     
+                {{-- @endcan --}}
+                {{-- @endauth      --}}
             </div>
         </div>     
     </div>
@@ -33,9 +35,9 @@
         <div class="columns is-centered">
         <div class="column is-half">
         <h1 class="title has-text-centered has-text-weight-bold is-size-3 has-text-grey-lighter mb-6">No Posts yet..</h1>
-        @auth
+        {{-- @auth --}}
             @include('snippets._create-post-panel')
-        @endauth
+        {{-- @endauth --}}
         </div>
         <div class="column"></div>
     </div>
@@ -43,11 +45,14 @@
     <div class="columns is-centered">
     <div class="column"></div>
         <div class="column is-half">
-        @auth
+        {{-- @auth --}}
             @include('snippets._create-post-panel')
-        @endauth
+        {{-- @endauth --}}
+        
         @foreach ($posts as $post)
+        <a href="{{url("/w/{$post->subweddit->name}/comments/{$post->id}/{$post->slug}")}}">
             @include('snippets._post')
+        </a>
         @endforeach
         </div>
         <div class="column is-one-quarter">

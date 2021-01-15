@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Subweddit;
 use App\Models\Post;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ class SubwedditController extends Controller
 {
     public function index(){
         $subweddits = Subweddit::all();
+
         if (auth()->check()) {
 
             return view('home', [
@@ -20,7 +22,9 @@ class SubwedditController extends Controller
             ]);
             
             } else {
-            $posts = Post::all();
+            $posts = Post::with('subweddit')->get();
+
+            //dd($posts);
             return view('home', [
                 'subweddits' => $subweddits,
                 'posts' => $posts
@@ -48,33 +52,39 @@ class SubwedditController extends Controller
         $subweddit->mod_id = Auth::id();
         $subweddit->save();
 
+        $posts = Post::where('subweddit_id', $subweddit->id)->get();
         
-        
-        return view('subweddits.create', ['subweddit'=>$subweddit]);
+        return view('subweddits.show', 
+            ['subweddit'=>$subweddit,
+            'posts'=> $posts]);
     }
 
-    public function show($subweddit){
+    public function show(Subweddit $subweddit){
 
-        $subweddit = Subweddit::where('name', $subweddit)->firstOrFail(); // uses elequent to locate a row where 'name' is equal to the value given in the uri (or fail)
-        $posts = Post::where('subweddit_id', $subweddit->id)->get(); // again, using elequent, gets the posts where the subweddit_id is equal to the id of the given subweddit
+        $posts = Post::where('subweddit_id', $subweddit->id)->latest()->get(); // again, using elequent, gets the posts where the subweddit_id is equal to the id of the given subweddit
 
-         return view('subweddits.show', [
+        return view('subweddits.show', [
             'subweddit'=>$subweddit,
             'posts'=>$posts]); 
 
     }
 
-    public function logo($subweddit){
-
-        $subweddit = Subweddit::where('name', $subweddit)->firstOrFail();
+    public function logo(Subweddit $subweddit){
         return response()->file(storage_path() . '/app/' . $subweddit->logo);
     }
     
     public function delete(Subweddit $subweddit){
-        $subweddit = Subweddit::findOrFail($subweddit->id);
-        Storage::Delete($subweddit->path);
+
+        //$posts = Post::where('subweddit_id',$subweddit->id)->get();
+        $posts = Post::where('subweddit_id',$subweddit->id)->delete(); //not great syntax - find better solution
+        //$comments = Comment::where('post_id', $post)->delete();
+        Storage::Delete($subweddit->logo);
         $subweddit->delete();
+
+        $subweddits = Subweddit::all();
+        
         return view('home', [
+            'subweddits' => $subweddits,
             'posts' => auth()->user()->timeline()
         ]);
     }

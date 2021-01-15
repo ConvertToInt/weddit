@@ -14,7 +14,7 @@
                     @if (Auth::user()->id = $post->user_id or Auth::user()->id = $subweddit->mod_id)
                         <div class="column is-1">
                             <form method ="POST"
-                                    action='{{url("/w/{$subweddit->name}/comments/{$post->id}/{$post->title}/edit")}}'  
+                                    action='{{url("/w/{$subweddit->name}/comments/{$post->id}/{$post->slug}/edit")}}'  
                                     style="display:inline!Important;">
 
                                     @csrf
@@ -30,11 +30,11 @@
                     @endif
                     @endauth
                 </div>
-                @if( $post->thumbnail)
+                @if( $post->img)
                     <div class="columns is-centered">
                         <div class="column"></div>
                         <div class="column is-10">
-                            <img style=" border-radius:2%; border:2px solid grey;" src="{{url('/w', [$post->subweddit->name, $post->id, $post->title, 'img'])}}"> {{-- if exists then show file, if not show default.jpg (weddit logo) (add to stoarage) --}}
+                            <img style=" border-radius:2%; border:2px solid grey;" src="{{url('/w', [$post->subweddit->name, $post->id, $post->slug, 'img'])}}"> {{-- if exists then show file, if not show default.jpg (weddit logo) (add to stoarage) --}}
                         </div>
                         <div class="column"></div>
                     </div>

@@ -11,6 +11,7 @@
                             <p class="is-5 has-text-grey-lighter">{{$comment->body}}</p>
                         </p>
                     </div>
+                    @auth
                     @if (Auth::user()->id = $comment->user_id or Auth::user()->id = $subweddit->mod_id)
                         <div class="column is-1">
                             <form method ="POST"
@@ -28,10 +29,12 @@
                             </form>  
                         </div>
                     @endif
+                    @endauth
                 </div>
 
                 <div class="columns is-centered">
                     <div class="column is-12">
+                    @auth
                         <form method="post" action='{{url("/w/$subweddit->name/$post->id/$post->title/reply")}}'>
                             @csrf
 
@@ -47,6 +50,7 @@
                             <input type="hidden" name="post_id" value="{{ $post->id }}" />
                             <input type="hidden" name="parent_id" value="{{ $comment->id }}" />
                         </form>
+                    @endauth
                     </div>
                 </div>
             </div>

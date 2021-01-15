@@ -14,12 +14,12 @@
                 <div class="level-left">
                     @auth
                     <div class="level-item">
-                        <input type="submit" class="button is-warning" value="Post Comment"></a>
+                        <input type="submit" class="button is-primary" value="Post Comment"></a>
                     </div>
                     @endauth
                     @guest
                     <div class="level-item">
-                        <a href="/login"><input class="button is-warning" value="Log in to comment"></a>
+                        <a href="/login"><input class="button is-primary" value="Log in to comment"></a>
                     </div>
                     @endguest
                 </div>

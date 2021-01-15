@@ -11,11 +11,15 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    public function store(Request $request, $subweddit, $id, $title) {
+    public function store(Request $request, Subweddit $subweddit, Post $post, $slug) {
+
+        $request->validate([
+            'body' => 'required|max:10000'
+        ]);
 
         $comment =  new Comment;
         $comment->user_id = Auth::id();
-        $comment->post_id = $request->id;
+        $comment->post_id = $request->post_id;
         $comment->body = $request->body;
 
         $comment->save();
@@ -23,11 +27,15 @@ class CommentController extends Controller
         return back();
     }
 
-    public function reply(Request $request, $subweddit, $id, $title) {
+    public function reply(Request $request, Subweddit $subweddit, Post $post, $slug) {
+
+        $request->validate([
+            'body' => 'required|max:10000'
+        ]);
 
         $comment =  new Comment;
         $comment->user_id = Auth::id();
-        $comment->post_id = $request->id;
+        $comment->post_id = $request->post_id;
         $comment->parent_id = $request->parent_id;
         $comment->body = $request->body;
 
@@ -36,20 +44,13 @@ class CommentController extends Controller
         return back();
     }
 
-    public function delete($subweddit, $id, $title, $comment) {
-        $subweddit = Subweddit::where('name', $subweddit)->firstOrFail(); // uses elequent to locate a subweddit where 'name' is equal to the value given in the uri (or fail)
-        $post = Post::where('id', $id)->firstOrFail();
-        $comment = Comment::where('id', $comment)->firstOrFail();
+    public function delete(Subweddit $subweddit, Post $post, $slug, Comment $comment) {
 
-        $comment = Comment::findOrFail($comment->id);
-        //Storage::Delete($upload->path);
+        //$replies = Comment::where('parent_id', $comment->id)->get()->delete();
         $comment->delete();
         
-        $comments = Comment::where('post_id', $id)->whereNull('parent_id')->get();
+        $comments = Comment::where('post_id', $post->id)->whereNull('parent_id')->get();
 
-        return view('posts.show',
-                    ['subweddit'=>$subweddit,
-                    'post'=>$post,
-                    'comments'=>$comments]);
+        return back();
     }
 }

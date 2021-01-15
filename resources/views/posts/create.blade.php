@@ -16,21 +16,30 @@
         <div class="field">
             <label class="label is-medium has-text-grey-lighter">Title</label>
             <div class="control">
-                <input class="input" type="text" name="title">
+                <input class="input @error('title') is-danger @enderror" type="text" name="title">
+                @error('title')
+                            <p class="help is-danger">{{ $errors->first('title') }}</p>
+                @enderror
             </div>
         </div>
 
         <div class="field">
             <label class="label is-medium has-text-grey-lighter">Body</label>
             <div class="control">
-                <textarea class="textarea" name="body"></textarea>
+                <textarea class="textarea @error('body') is-danger @enderror" name="body"></textarea>
+                @error('body')
+                            <p class="help is-danger">{{ $errors->first('body') }}</p>
+                @enderror
             </div>
         </div>
 
         <div class="field">
             <label class="label is-medium has-text-grey-lighter">Image (optional)</label>
             <div class="control">
-                <input class="input" type="file" name="img">
+                <input class="input @error('img') is-danger @enderror" type="file" name="img">
+                @error('img')
+                            <p class="help is-danger">{{ $errors->first('img') }}</p>
+                @enderror
             </div>
         </div>
 

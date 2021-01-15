@@ -6,7 +6,7 @@ use App\Models\Subweddit;
 trait Followable {
 
     public function follow(Subweddit $subweddit) {
-        return $this->follows()->save($subweddit); //this is working correctly
+        return $this->follows()->save($subweddit);
     }
 
     public function unfollow(Subweddit $subweddit) {
@@ -24,7 +24,7 @@ trait Followable {
 
     public function following($subweddit) {
         return $this->follows()
-            ->where('subweddit_id', $subweddit) //this is working correctly
+            ->where('subweddit_id', $subweddit)
             ->exists();
     }
 

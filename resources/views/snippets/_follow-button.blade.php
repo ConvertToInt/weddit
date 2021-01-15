@@ -1,5 +1,5 @@
 <form method ="POST"
-    action='{{url("/w/{$subweddit->id}/toggleFollow")}}'>
+    action='{{url("/w/{$subweddit->name}/toggleFollow")}}'>
     @csrf
 
     <button class="button is-primary" type="submit">

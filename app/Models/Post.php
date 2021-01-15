@@ -16,4 +16,8 @@ class Post extends Model
     public function subweddit() {
         return $this->belongsTo('App\Models\Subweddit');
     }
+
+    public function comments() {
+        return $this->hasMany('App\Models\Comment');
+    }
 }

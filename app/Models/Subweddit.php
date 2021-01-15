@@ -10,6 +10,11 @@ class Subweddit extends Model
     use HasFactory;
 
     public function posts(){
-        return $this->hasMany(Post::class);
+        return $this->hasMany('App\Models\Post');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'name';
     }
 }

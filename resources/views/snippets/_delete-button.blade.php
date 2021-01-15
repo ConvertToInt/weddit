@@ -1,5 +1,5 @@
 <form method ="POST" 
-    action='{{url("/w/{$subweddit->id}")}}'>
+    action='{{url("/w/{$subweddit->name}/delete")}}'>
 
     @csrf
     @method('delete')

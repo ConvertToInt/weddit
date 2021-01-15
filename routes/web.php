@@ -18,25 +18,25 @@ use App\Http\Controllers\CommentController;
 |
 */
 
-Route::get('/', [SubwedditController::class, 'index']);
-Route::get('/w/create', [SubwedditController::class, 'create']);
-Route::post('/w', [SubwedditController::class, 'store']);
-Route::get('/w/{subweddit}', [SubwedditController::class, 'show']);
-Route::get('/w/{subweddit}/logo', [SubwedditController::class, 'logo']);
-Route::delete('/w/{subweddit}', [SubwedditController::class, 'delete']);
+Route::get('/', [SubwedditController::class, 'index'])->middleware('can:viewAny,App\Models\Subweddit'); //works
+Route::get('/w/create', [SubwedditController::class, 'create'])->middleware('can:create,App\Models\Subweddit'); //works
+Route::post('/w', [SubwedditController::class, 'store'])->middleware('can:create,App\Models\Subweddit'); //works
+Route::get('/w/{subweddit}', [SubwedditController::class, 'show'])->middleware('can:view,subweddit'); //works
+Route::get('/w/{subweddit}/logo', [SubwedditController::class, 'logo'])->middleware('can:view,subweddit'); //works
+Route::delete('/w/{subweddit}/delete', [SubwedditController::class, 'delete'])->middleware('can:delete,subweddit'); //works
+Route::post('/w/{subweddit}/toggleFollow', [FollowsController::class, 'toggle'])->middleware('can:follow,subweddit'); // :name means you dont have to bind the subweddit
 
-Route::post('/w/{subweddit}', [PostController::class, 'store']);
-Route::get('/w/{subweddit}/submit', [PostController::class, 'create']);
-Route::post('/w/{subweddit}/toggleFollow', [FollowsController::class, 'toggle']); // :name means you dont have to bind the subweddit
-Route::get('/w/{subweddit}/comments/{id}/{title}/edit', [PostController::class, 'edit']); 
-Route::get('/w/{subweddit}/comments/{id}/{title}', [PostController::class, 'show']); // when taking in id (which is post id) here you could pick it up as Post id or smth, to collect the object, the subweddit uses name so you cannot (worth changing)
-Route::get('/w/{subweddit}/{id}/{title}/img', [PostController::class, 'img']);
-Route::put('/w/{subweddit}/comments/{id}/{title}', [PostController::class, 'update']); //id is the post id.. bit ambiguous, could be the comment id
-Route::delete('/w/{subweddit}/comments/{id}/{title}', [PostController::class, 'destroy']);
+Route::post('/w/{subweddit}', [PostController::class, 'store'])->middleware('can:create,App\Models\Post'); //works
+Route::get('/w/{subweddit}/submit', [PostController::class, 'create'])->middleware('can:create,App\Models\Post'); //works
+Route::get('/w/{subweddit}/comments/{post}/{slug}/edit', [PostController::class, 'edit'])->middleware('can:update,post'); //works
+Route::get('/w/{subweddit}/comments/{post}/{slug}', [PostController::class, 'show'])->middleware('can:view,post'); // works
+Route::get('/w/{subweddit}/{post}/{slug}/img', [PostController::class, 'img'])->middleware('can:view,post'); //works
+Route::put('/w/{subweddit}/comments/{post}/{slug}', [PostController::class, 'update'])->middleware('can:update,post'); // works
+Route::delete('/w/{subweddit}/comments/{post}/{slug}', [PostController::class, 'destroy'])->middleware('can:delete,post,subweddit'); //works
 
-Route::post('/w/{subweddit}/{id}/{title}/comment', [CommentController::class, 'store']);
-Route::post('/w/{subweddit}/{id}/{title}/reply', [CommentController::class, 'reply']);
-Route::delete('/w/{subweddit}/{id}/{title}/{comment}/delete', [CommentController::class, 'delete']);
+Route::post('/w/{subweddit}/{post}/{slug}/comment', [CommentController::class, 'store'])->middleware('can:create,App\Models\Comment'); //works
+Route::post('/w/{subweddit}/{post}/{slug}/reply', [CommentController::class, 'reply'])->middleware('can:create,App\Models\Comment'); //works
+Route::delete('/w/{subweddit}/{post}/{slug}/{comment}/delete', [CommentController::class, 'delete'])->middleware('can:delete,comment,subweddit'); //works
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
