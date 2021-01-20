@@ -95,7 +95,6 @@ class PostController extends Controller
 
     public function destroy(Subweddit $subweddit, Post $post, $slug){
 
-        $comments = Comment::where('post_id', $post->id)->delete();
         $post = Post::findOrFail($post->id);
         Storage::Delete($post->img);
         $post->delete();

@@ -17,16 +17,16 @@
                         {{ $subweddit->name }}
                     </h1>
                 </div>
-                {{-- @auth --}}
+                @auth
                 <div class="column is-2">
                 @include('snippets._follow-button')
                 </div>
-                {{-- @can('delete', $subweddit) --}}
+                @can('delete', $subweddit)
                 <div class="column is-1">
                 @include('snippets._delete-button')
                 </div>   
-                {{-- @endcan --}}
-                {{-- @endauth      --}}
+                @endcan
+                @endauth     
             </div>
         </div>     
     </div>

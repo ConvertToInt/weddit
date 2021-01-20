@@ -45,8 +45,7 @@ class CommentController extends Controller
     }
 
     public function delete(Subweddit $subweddit, Post $post, $slug, Comment $comment) {
-
-        //$replies = Comment::where('parent_id', $comment->id)->get()->delete();
+        
         $comment->delete();
         
         $comments = Comment::where('post_id', $post->id)->whereNull('parent_id')->get();

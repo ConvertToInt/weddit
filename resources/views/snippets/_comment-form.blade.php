@@ -3,7 +3,7 @@
         <div class="box has-background-black-ter has-text-grey-lighter">
             <article class="media">
             <div class="media-content">
-            <form method ="POST" action='{{url("/w/$subweddit->name/$post->id/$post->title/comment")}}' >
+            <form method ="POST" action='{{url("/w/$subweddit->name/$post->id/$post->slug/comment")}}' >
             @csrf
                 <div class="field">
                 <p class="control">
