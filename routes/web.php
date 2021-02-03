@@ -32,7 +32,7 @@ Route::get('/w/{subweddit}/comments/{post}/{slug}/edit', [PostController::class,
 Route::get('/w/{subweddit}/comments/{post}/{slug}', [PostController::class, 'show'])->middleware('can:view,post'); // works
 Route::get('/w/{subweddit}/{post}/{slug}/img', [PostController::class, 'img'])->middleware('can:view,post'); //works
 Route::put('/w/{subweddit}/comments/{post}/{slug}', [PostController::class, 'update'])->middleware('can:update,post'); // works
-Route::delete('/w/{subweddit}/comments/{post}/{slug}', [PostController::class, 'destroy'])->middleware('can:delete,post,subweddit'); //works
+Route::delete('/w/{subweddit}/comments/{post}/{slug}', [PostController::class, 'delete'])->middleware('can:delete,post,subweddit'); //works
 
 Route::post('/w/{subweddit}/{post}/{slug}/comment', [CommentController::class, 'store'])->middleware('can:create,App\Models\Comment'); //works
 Route::post('/w/{subweddit}/{post}/{slug}/reply', [CommentController::class, 'reply'])->middleware('can:create,App\Models\Comment'); //works

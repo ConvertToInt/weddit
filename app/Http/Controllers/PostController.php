@@ -93,9 +93,8 @@ class PostController extends Controller
         ]);
     }
 
-    public function destroy(Subweddit $subweddit, Post $post, $slug){
+    public function delete(Subweddit $subweddit, Post $post, $slug){
 
-        $post = Post::findOrFail($post->id);
         Storage::Delete($post->img);
         $post->delete();
 

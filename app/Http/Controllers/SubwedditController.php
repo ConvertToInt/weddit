@@ -75,10 +75,7 @@ class SubwedditController extends Controller
     
     public function delete(Subweddit $subweddit){
 
-        //$posts = Post::where('subweddit_id',$subweddit->id)->get();
-        $posts = Post::where('subweddit_id',$subweddit->id)->delete(); //not great syntax - find better solution
-        //$comments = Comment::where('post_id', $post)->delete();
-        Storage::Delete($subweddit->logo);
+        Storage::DeleteDirectory('subweddits' . '/' . $subweddit->name);
         $subweddit->delete();
 
         $subweddits = Subweddit::all();
